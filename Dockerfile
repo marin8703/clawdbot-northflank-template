@@ -83,9 +83,9 @@ COPY --from=openclaw-build /openclaw /openclaw
 RUN printf '%s\n' '#!/usr/bin/env bash' 'exec node /openclaw/dist/entry.js "$@"' > /usr/local/bin/openclaw \
   && chmod +x /usr/local/bin/openclaw
 
-COPY src ./src
 COPY src/workspace-setup.sh /usr/local/bin/workspace-setup.sh
 RUN chmod +x /usr/local/bin/workspace-setup.sh
+COPY src ./src
 
 # The wrapper listens on $PORT.
 # IMPORTANT: Do not set a default PORT here.

@@ -1413,10 +1413,10 @@ const server = app.listen(PORT, "0.0.0.0", async () => {
   // Run workspace setup (symlink persistent volume to ephemeral workspace path).
   // Must happen before bootstrap.sh and the gateway so they see the persistent workspace.
   try {
-    childProcess.execSync('/usr/local/bin/workspace-setup.sh', { stdio: 'inherit' });
-    console.log('[wrapper] workspace setup complete');
+    childProcess.execSync("/usr/local/bin/workspace-setup.sh", { stdio: "inherit", timeout: 15000 });
+    console.log("[wrapper] workspace setup complete");
   } catch (e) {
-    console.warn('[workspace-setup] Warning:', e.message);
+    console.warn("[workspace-setup] Warning:", e.message);
   }
 
   // Optional operator hook to install/persist extra tools under /data.
