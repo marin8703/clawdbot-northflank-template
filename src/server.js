@@ -1410,6 +1410,15 @@ const server = app.listen(PORT, "0.0.0.0", async () => {
     console.warn("[wrapper] WARNING: SETUP_PASSWORD is not set; /setup will error.");
   }
 
+  // Run workspace setup (symlink persistent volume to ephemeral workspace path).
+  // Must happen before bootstrap.sh and the gateway so they see the persistent workspace.
+  try {
+    childProcess.execSync("/usr/local/bin/workspace-setup.sh", { stdio: "inherit", timeout: 15000 });
+    console.log("[wrapper] workspace setup complete");
+  } catch (e) {
+    console.warn("[workspace-setup] Warning:", e.message);
+  }
+
   // Optional operator hook to install/persist extra tools under /data.
   // This is intentionally best-effort and should be used to set up persistent
   // prefixes (npm/pnpm/python venv), not to mutate the base image.
