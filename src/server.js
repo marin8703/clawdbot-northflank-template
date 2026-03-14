@@ -1446,6 +1446,15 @@ const server = app.listen(PORT, "0.0.0.0", async () => {
     }
   }
 
+  // Run workspace setup (symlink persistent volume to ephemeral workspace path).
+  // Must happen before the gateway starts so OpenClaw sees the persistent workspace.
+  try {
+    childProcess.execSync('/usr/local/bin/workspace-setup.sh', { stdio: 'inherit' });
+    console.log('[wrapper] workspace setup complete');
+  } catch (e) {
+    console.warn('[workspace-setup] Warning:', e.message);
+  }
+
   // Auto-start the gateway if already configured so polling channels (Telegram/Discord/etc.)
   // work even if nobody visits the web UI.
   if (isConfigured()) {

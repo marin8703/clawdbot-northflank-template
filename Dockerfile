@@ -49,7 +49,14 @@ RUN apt-get update \
     tini \
     python3 \
     python3-venv \
+    python3-pip \
+    ffmpeg \
+    jq \
+    ripgrep \
   && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --break-system-packages --no-cache-dir \
+    beautifulsoup4 lxml requests pandas numpy pyyaml httpx rich
 
 # `openclaw update` expects pnpm. Provide it in the runtime image.
 RUN corepack enable && corepack prepare pnpm@10.23.0 --activate
@@ -77,6 +84,8 @@ RUN printf '%s\n' '#!/usr/bin/env bash' 'exec node /openclaw/dist/entry.js "$@"'
   && chmod +x /usr/local/bin/openclaw
 
 COPY src ./src
+COPY src/workspace-setup.sh /usr/local/bin/workspace-setup.sh
+RUN chmod +x /usr/local/bin/workspace-setup.sh
 
 # The wrapper listens on $PORT.
 # IMPORTANT: Do not set a default PORT here.
