@@ -53,10 +53,12 @@ RUN apt-get update \
     ffmpeg \
     jq \
     ripgrep \
+    graphviz \
   && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --break-system-packages --no-cache-dir \
-    beautifulsoup4 lxml requests pandas numpy pyyaml httpx rich
+    beautifulsoup4 lxml requests pandas numpy pyyaml httpx rich \
+    schemdraw matplotlib Pillow openpyxl
 
 # `openclaw update` expects pnpm. Provide it in the runtime image.
 RUN corepack enable && corepack prepare pnpm@10.23.0 --activate
