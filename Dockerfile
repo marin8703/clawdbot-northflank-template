@@ -55,6 +55,8 @@ RUN apt-get update \
     ripgrep \
     graphviz \
     ngspice \
+    kicad \
+    kicad-libraries \
   && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --break-system-packages --no-cache-dir \
