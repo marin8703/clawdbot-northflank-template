@@ -54,6 +54,7 @@ RUN apt-get update \
     jq \
     ripgrep \
     graphviz \
+    ngspice \
   && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --break-system-packages --no-cache-dir \
