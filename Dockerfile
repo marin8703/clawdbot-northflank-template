@@ -60,8 +60,18 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --break-system-packages --no-cache-dir \
-    beautifulsoup4 lxml requests pandas numpy pyyaml httpx rich \
-    schemdraw matplotlib Pillow openpyxl
+    beautifulsoup4==4.12.3 \
+    lxml==5.2.1 \
+    requests==2.32.3 \
+    pandas==2.2.2 \
+    numpy==1.26.4 \
+    pyyaml==6.0.2 \
+    httpx==0.27.0 \
+    rich==13.7.1 \
+    schemdraw==0.15 \
+    matplotlib==3.8.4 \
+    Pillow==10.3.0 \
+    openpyxl==3.1.2
 
 # `openclaw update` expects pnpm. Provide it in the runtime image.
 RUN corepack enable && corepack prepare pnpm@10.23.0 --activate
